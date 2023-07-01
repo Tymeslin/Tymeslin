@@ -1,0 +1,25 @@
+from flask import Flask, render_template, request
+import pandas as pd
+import matplotlib.pyplot as plt
+
+app = Flask(__name__)
+
+# Rota principal
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Rota para processar a previsão dos eventos
+@app.route('/prever_eventos', methods=['POST'])
+def prever_eventos():
+    # Obter os dados do formulário
+    eventos_para_prever = pd.date_range(start=request.form['data_inicio'], periods=int(request.form['num_eventos']), freq='D')
+
+    # Código para avaliar os gráficos e gerar as previsões
+    # ...
+    
+    # Retornar os resultados para o template
+    return render_template('resultado.html', eventos=eventos_para_prever, resultados=resultados_previstos)
+
+if __name__ == '__main__':
+    app.run()
